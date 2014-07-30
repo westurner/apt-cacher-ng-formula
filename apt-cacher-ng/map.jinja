@@ -1,0 +1,10 @@
+
+{% set acng = salt['grains.filter_by']({
+    'default': {
+        'pkg': 'apt-cacher-ng',
+        'service': 'apt-cacher-ng',
+        'config': '/etc/apt-cacher-ng/acng.conf',
+        'cachedir': '/var/cache/apt-cacher-ng',
+        'pidfile': '/var/run/apt-cacher-ng/pid',
+    },
+}, merge=salt['pillar.get']('apt-cacher-ng')) %}

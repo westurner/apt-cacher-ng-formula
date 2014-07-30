@@ -1,0 +1,4 @@
+apt-cacher-ng:
+  pkg: apt-cacher-ng
+
+  ForwardBtsSoap: 1

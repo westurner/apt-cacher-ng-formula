@@ -1,18 +1,20 @@
+
 # {{ pillar.get('message_do_not_modify', '') }}
+{%- from "apt-cacher-ng/map.jinja" import acng with context -%}
 
 # apt-cacher-ng configuration
 
 # Letter case in directive names does not matter. Must be separated with colons.
 # Valid boolean values are a zero number for false, non-zero numbers for true.
 
-CacheDir: {{ pillar.get('apt-cacher-ng:cachedir', '/var/cache/apt-cacher-ng') }}
+CacheDir: {{ acng.get('cachedir', '/var/cache/apt-cacher-ng') }}
 
 # set empty to disable logging
-LogDir: /var/log/apt-cacher-ng
+LogDir: {{ acng.get('logdir', '/var/log/apt-cacher-ng') }}
 
 # TCP (http) port
 # Set to 9999 to emulate apt-proxy
-Port: 23142
+Port: {{ acng.get('port', 23142) }}
 
 # Addresses or hostnames to listen on. Multiple addresses must be separated by
 # spaces. Each entry must be associated with a local interface. DNS resolution
@@ -119,9 +121,14 @@ Remap-winswitch: winswitch.org ; http://winswitch.org
 
 ## docker
 {# TODO: if apt-cacher-ng:version >= n #}
+{# Requires pkg:apt-transport-https #}
 Remap-docker: get.docker.io ; https://get.docker.io
 PassThroughPattern: get\.docker\.io:443$
 
+## changelogs
+# http://changelogs.ubuntu.com/changelogs/
+Remap-changelogs: changelogs.ubuntu.com ; http://changelogs.ubuntu.com
+PassThroughPattern: changelogs\.ubuntu\.com$
 
 ## provis
 Remap-provis: provis.create.wrd.nu ; http://provis.create.wrd.nu
@@ -152,9 +159,11 @@ SocketPath: /var/run/apt-cacher-ng/sock
 
 # Store the pid of the daemon process therein
 # PidFile: /var/run/apt-cacher-ng/pid
+PidFile: {{ acng.get('pidfile', '/var/run/apt-cacher-ng/pid') }}
 
 # Forbid outgoing connections, work around them or respond with 503 error
 # offlinemode:0
+offlinemode: {{ acng.get('offlinemode', 0) }}
 
 # Forbid all downloads that don't run through preconfigured backends (.where)
 ForceManaged: 1
@@ -179,7 +188,8 @@ ExTreshold: 4
 # Experimental feature for apt-listbugs: pass-through SOAP requests and
 # responses to/from bugs.debian.org. If not set, default is true if
 # ForceManaged is enabled and false otherwise.
-ForwardBtsSoap: 0
+#ForwardBtsSoap: 0
+ForwardBtsSoap: {{ acng.get('ForwardBtsSoap', 0) }}
 
 # The daemon has a small cache for DNS data, to speed up resolution. The
 # expiration time of the DNS entries can be configured in seconds.
@@ -199,7 +209,7 @@ ForwardBtsSoap: 0
 # Pigeonholing files with regular expressions (static/volatile). Can be
 # overriden here but not should not be done permanently because future update
 # of default settings would not be applied later.
-# VfilePattern = (^|.*/)(Index|Packages(\.gz|\.bz2|\.lzma|\.xz)?|InRelease|Release|Release\.gpg|Sources(\.gz|\.bz2|\.lzma|\.xz)?|release|index\.db-.*\.gz|Contents-[^/]*(\.gz|\.bz2|\.lzma|\.xz)?|pkglist[^/]*\.bz2|rclist[^/]*\.bz2|meta-release[^/]*|Translation[^/]*(\.gz|\.bz2|\.lzma|\.xz)?|MD5SUMS|SHA1SUMS|((setup|setup-legacy)(\.ini|\.bz2|\.hint)(\.sig)?)|mirrors\.lst|repo(index|md)\.xml(\.asc|\.key)?|directory\.yast|products|content(\.asc|\.key)?|media|filelists\.xml\.gz|filelists\.sqlite\.bz2|repomd\.xml|packages\.[a-zA-Z][a-zA-Z]\.gz|info\.txt|license\.tar\.gz|license\.zip|.*\.(db|files|abs)(\.tar(\.gz|\.bz2|\.lzma|\.xz))?|metalink\?repo|.*prestodelta\.xml\.gz|repodata/.*\.(xml|sqlite)(\.gz|\.bz2|\.lzma|\.xz))$|/dists/.*/installer-[^/]+/[^0-9][^/]+/images/.*
+VfilePattern = (^|.*/)(Index|Packages(\.gz|\.bz2|\.lzma|\.xz)?|NEWS\.Debian|InRelease|Release|Release\.gpg|Sources(\.gz|\.bz2|\.lzma|\.xz)?|release|index\.db-.*\.gz|Contents-[^/]*(\.gz|\.bz2|\.lzma|\.xz)?|pkglist[^/]*\.bz2|rclist[^/]*\.bz2|meta-release[^/]*|Translation[^/]*(\.gz|\.bz2|\.lzma|\.xz)?|MD5SUMS|SHA1SUMS|((setup|setup-legacy)(\.ini|\.bz2|\.hint)(\.sig)?)|mirrors\.lst|repo(index|md)\.xml(\.asc|\.key)?|directory\.yast|products|content(\.asc|\.key)?|media|filelists\.xml\.gz|filelists\.sqlite\.bz2|repomd\.xml|packages\.[a-zA-Z][a-zA-Z]\.gz|info\.txt|license\.tar\.gz|license\.zip|.*\.(db|files|abs)(\.tar(\.gz|\.bz2|\.lzma|\.xz))?|metalink\?repo|.*prestodelta\.xml\.gz|repodata/.*\.(xml|sqlite)(\.gz|\.bz2|\.lzma|\.xz))$|/dists/.*/installer-[^/]+/[^0-9][^/]+/images/.*
 # PfilePattern = .*(\.d?deb|\.rpm|\.drpm|\.dsc|\.tar(\.gz|\.bz2|\.lzma|\.xz)(\.gpg)?|\.diff(\.gz|\.bz2|\.lzma|\.xz)|\.jigdo|\.template|changelog|copyright|\.udeb|\.debdelta|\.diff/.*\.gz|(Devel)?ReleaseAnnouncement(\?.*)?|[a-f0-9]+-(susedata|updateinfo|primary|deltainfo).xml.gz|fonts/(final/)?[a-z]+32.exe(\?download.*)?|/dists/.*/installer-[^/]+/[0-9][^/]+/images/.*)$
  
 # Whitelist for expiration, file types not to be removed even when being

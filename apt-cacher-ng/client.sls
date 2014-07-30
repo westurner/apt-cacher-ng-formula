@@ -1,4 +1,4 @@
-{% set url = "http://apt.create.wrd.nu:23142" %}
+{% set apt = pillar.get('apt', {}) %}
 
 /etc/apt/apt.conf:
   file.managed:
@@ -6,4 +6,4 @@
     - user: root
     - group: root
     - content: |
-        Acquire::http::Proxy "{{ url }}";
+        Acquire::http::Proxy "{{ apt.proxy_url }}";
