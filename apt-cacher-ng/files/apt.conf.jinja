@@ -1,5 +1,5 @@
 # {{ pillar.get('message_do_not_modify', '') }}
-{% set proxy_url = salt['pillar.get']('apt-cacher-ng:url') %}
-{% if proxy_url is defined %}
-Acquire::http::Proxy "{{ proxy_url }}";
-{% endif %}
+{% set apt = salt['pillar.get']('apt', {}) -%}
+{%- if apt.get('proxy_url') -%}
+Acquire::http::Proxy "{{ apt.proxy_url }}";
+{% endif -%}

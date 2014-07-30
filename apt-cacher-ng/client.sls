@@ -5,5 +5,5 @@
     - mode: 0644
     - user: root
     - group: root
-    - content: |
-        Acquire::http::Proxy "{{ apt.proxy_url }}";
+    - source: salt://apt-cacher-ng/files/apt.conf.jinja
+    - template: jinja
