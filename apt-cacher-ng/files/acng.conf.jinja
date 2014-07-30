@@ -123,12 +123,15 @@ Remap-winswitch: winswitch.org ; http://winswitch.org
 {# TODO: if apt-cacher-ng:version >= n #}
 {# Requires pkg:apt-transport-https #}
 Remap-docker: get.docker.io ; https://get.docker.io
-PassThroughPattern: get\.docker\.io:443$
+#PassThroughPattern: get\.docker\.io:443$
 
 ## changelogs
 # http://changelogs.ubuntu.com/changelogs/
 Remap-changelogs: changelogs.ubuntu.com ; http://changelogs.ubuntu.com
-PassThroughPattern: changelogs\.ubuntu\.com$
+#PassThroughPattern: changelogs\.ubuntu\.com$
+
+## passthrough
+PassThroughPattern: (get\.docker\.io:443|changelogs\.ubuntu\.com)$
 
 ## provis
 Remap-provis: provis.create.wrd.nu ; http://provis.create.wrd.nu
