@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """
-test_apt-cacher-ng-formula
+test_apt-cacher-ng_formula
 ----------------------------------
 
-Tests for `apt-cacher-ng-formula` module.
+Tests for `apt_cacher_ng_formula` module.
 """
 
 import unittest
 
-from apt-cacher-ng-formula import apt-cacher-ng-formula
+from apt_cacher_ng_formula import apt_cacher_ng_formula
 
 
-class TestApt-cacher-ng-formula(unittest.TestCase):
+class TestApt_cacher_ng_formula(unittest.TestCase):
 
     def setUp(self):
         pass
