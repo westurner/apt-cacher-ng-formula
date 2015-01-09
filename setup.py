@@ -1,6 +1,24 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
+from distutils.cmd import Command
+class TestCommand(Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import sys, subprocess
+
+        raise SystemExit(
+            subprocess.call([sys.executable,
+                             '-m',
+                             'unittest',
+                             'discover']))
 
 setup(name='apt_cacher_ng_formula',
       version='1.0',
@@ -10,6 +28,7 @@ setup(name='apt_cacher_ng_formula',
       url='https://github.com/westurner/apt-cacher-ng-formula',
       #packages=['apt_cacher_ng'],
       requires=['saltstack'],
+      test_suite="tests",
       data_files=[
           ('/etc/salt/master.d/', 
            [
@@ -30,4 +49,8 @@ setup(name='apt_cacher_ng_formula',
                'apt_cacher_ng/files/acng_latest.sh',
            ])
       ],
+
+      cmdclass={
+          'test': TestCommand
+      }
   )

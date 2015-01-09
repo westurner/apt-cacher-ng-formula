@@ -7,6 +7,11 @@ Salt formula for apt-cacher-ng
 * Free software: BSD license
 * SaltStack Formula
 
+Installation
+------------------------------------
+
+python setup.py install --root=SALTROOT
+
 .. note::
 
     See the full `Salt Formulas installation and usage instructions
@@ -29,3 +34,5 @@ and starts the associated apt-cacher-ng service.
 -------------------------------------
 Creates ``/etc/apt/apt.conf`` with the apt-cacher-ng server URL from
 ``pillar.get('apt:proxy_url')``.
+
+
