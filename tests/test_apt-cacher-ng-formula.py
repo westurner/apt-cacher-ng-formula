@@ -10,19 +10,19 @@ Tests for `apt_cacher_ng_formula` module.
 
 import unittest
 
-from apt_cacher_ng_formula import apt_cacher_ng_formula
-
-
-class TestApt_cacher_ng_formula(unittest.TestCase):
+class TestAptCacherNgFormula(unittest.TestCase):
 
     def setUp(self):
-        pass
+        print 'setup'
+        return True
 
     def test_something(self):
-        pass
+        
+        print 'test'
+        return True
 
     def tearDown(self):
-        pass
+        return True
 
 if __name__ == '__main__':
     unittest.main()

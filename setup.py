@@ -17,8 +17,8 @@ class TestCommand(Command):
         raise SystemExit(
             subprocess.call([sys.executable,
                              '-m',
-                             'unittest',
-                             'discover']))
+                             'nose',
+                             ]))
 
 setup(name='apt_cacher_ng_formula',
       version='1.0',
@@ -27,8 +27,7 @@ setup(name='apt_cacher_ng_formula',
       author_email='wes@wrd.nu',
       url='https://github.com/westurner/apt-cacher-ng-formula',
       #packages=['apt_cacher_ng'],
-      requires=['saltstack'],
-      test_suite="tests",
+      requires=['saltstack', 'nose'],
       data_files=[
           ('/etc/salt/master.d/', 
            [
