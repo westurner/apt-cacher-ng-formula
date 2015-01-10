@@ -15,10 +15,12 @@ class TestCommand(Command):
         import sys, subprocess
 
         raise SystemExit(
-            subprocess.call([sys.executable,
-                             '-m',
-                             'nose',
-                             ]))
+            subprocess.call(['nosetests',
+                             '--verbosity=999']))
+            #subprocess.call([sys.executable,
+            #                 '-m',
+            #                 'nose',
+            #                 ]))
 
 setup(name='apt_cacher_ng_formula',
       version='1.0',
