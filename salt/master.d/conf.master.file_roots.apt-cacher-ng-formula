@@ -1,0 +1,5 @@
+## Salt Master modular configuration for apt-cacher-ng-formula
+
+file_roots:
+  base:
+    - /srv/formulas/apt_cacher_ng

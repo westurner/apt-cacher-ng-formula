@@ -1,3 +1,4 @@
+#! yaml . jinja
 {% set apt = pillar.get('apt', {}) %}
 
 apt-proxy-conf:
